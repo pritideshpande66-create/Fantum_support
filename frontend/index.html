@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantum Support</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <img src="assets/icon.svg" class="bot-icon">
+      <div>
+        <div class="title">Fantum Support</div>
+        <div class="status">Covelnt • Always online</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Area -->
+  <div id="chat" class="chat-area">
+    <div class="welcome-message">
+      <h2>Hi! I'm Fantum 👋</h2>
+      <p>Your Covelnt support assistant. How can I help?</p>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <button onclick="quickAsk('Booking help')">📅 Booking Help</button>
+    <button onclick="quickAsk('Refund request')">🔁 Refund Request</button>
+    <button onclick="quickAsk('Payment issues')">💳 Payment Issues</button>
+    <button onclick="quickAsk('Account & privacy')">🛡 Account & Privacy</button>
+  </div>
+
+  <!-- Input -->
+  <form id="chatForm" class="input-bar">
+
+    <!-- Attach -->
+    <label class="attach">
+      <input type="file" id="file">
+
+      <svg class="attach-icon" viewBox="0 0 24 24">
+        <path fill="currentColor"
+          d="M16.5 6.5l-7.79 7.79a2 2 0 102.83 2.83l8.5-8.5a3.5 3.5 0 10-4.95-4.95l-9.19 9.19a5 5 0 107.07 7.07L19 13"/>
+      </svg>
+    </label>
+
+    <!-- Input -->
+    <input type="text" id="message" placeholder="Ask anything..." required>
+
+    <!-- Send -->
+    <button type="submit">
+  <svg viewBox="0 0 24 24">
+    <path d="M2 21l21-9L2 3v7l15 2-15 2z" fill="white"/>
+  </svg>
+</button>
+
+  </form>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+
