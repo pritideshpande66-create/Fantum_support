@@ -1,57 +1,246 @@
-const chat = document.getElementById("chat");
-const form = document.getElementById("chatForm");
-const messageInput = document.getElementById("message");
-const fileInput = document.getElementById("file");
-
-function addMessage(text, cls) {
-  const div = document.createElement("div");
-  div.className = `msg ${cls}`;
-
-  if (cls === "bot") {
-    div.innerHTML = marked.parse(text); // markdown render
-  } else {
-    div.innerText = text;
-  }
-
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-function quickAsk(text) {
-  messageInput.value = text;
-  form.requestSubmit();
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
+body {
+  background: linear-gradient(180deg, #0a192f, #020c1b);
+  height: 100vh;
+}
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+/* App Layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  color: white;
+}
 
-  const message = messageInput.value.trim();
-  if (!message) return;
+/* Header */
+.header {
+  padding: 16px;
+  border-bottom: 1px solid #1f2937;
+  display: flex;
+  align-items: center;
+}
 
-  addMessage(message, "user");
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  const data = new FormData();
-  data.append("message", message);
+.bot-icon {
+  width: 36px;
+  height: 36px;
+}
 
-  if (fileInput.files.length > 0) {
-    data.append("file", fileInput.files[0]);
+.title {
+  font-weight: 600;
+}
+
+.status {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Chat Area */
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-message {
+  text-align: center;
+  opacity: 0.7;
+  margin-top: 40px;
+}
+
+/* Messages */
+.msg {
+  margin-bottom: 14px;
+  max-width: 75%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  word-wrap: break-word;
+}
+
+.user {
+  background: #1e293b;
+  align-self: flex-end;
+}
+
+.bot {
+ background: #111827;
+  border: 1px solid #1f2937;
+  position: relative;
+  padding-left: 42px;
+}
+
+.bot::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 10px;
+  width: 26px;
+  height: 26px;
+  background: url("assets/icon.svg");
+  background-size: cover;
+  border-radius: 50%;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid #1f2937;
+}
+
+.quick-actions button {
+  flex: 1 1 45%;
+  background: #0b1220;
+  border: 1px solid #1f2937;
+  padding: 10px;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.quick-actions button:hover {
+  background: #111827;
+}
+
+/* Input Bar */
+.input-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid #1f2937;
+}
+
+/* Input */
+.input-bar input[type="text"] {
+  flex: 1;
+  height: 42px;
+  background: #0b1220;
+  border: none;
+  padding: 0 12px;
+  border-radius: 12px;
+  color: white;
+}
+
+/* Send Button */
+.input-bar button {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #14b8a6;
+  border: none;
+  padding: 0 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.input-bar button svg {
+  width: 18px;
+  height: 18px;
+}
+
+
+/* Attach */
+.attach {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b1220;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.attach input {
+  display: none; /* 🔥 IMPORTANT */
+}
+
+.attach:hover {
+  background: #111827;
+}
+
+/* Attach Icon */
+.attach-icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  display: block;
+  object-fit: contain;
+}
+
+.attach svg,
+.attach img {
+  width: 24px;
+  height: 24px;
+  fill: white; /* 🔥 FORCE COLOR */
+}
+
+/* Send Icon */
+.input-bar button img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .msg {
+    max-width: 85%;
   }
 
-  try {
-    const res = await fetch("http://localhost:8000/chat", {
-      method: "POST",
-      body: data
-    });
-
-    const json = await res.json();
-    
-    addMessage(json.reply, "bot");
-  } catch (err) {
-    addMessage("Server error. Is backend running?", "bot");
-    console.error(err);
+  .quick-actions button {
+    flex: 1 1 100%;
   }
+}
+.msg a {
+  color: #14b8a6;
+  text-decoration: underline;
+}
 
-  form.reset();
-});
+.msg {
+  animation: fadeIn 0.25s ease;
+}
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.msg {
+  animation: fadeIn 0.25s ease;
+}
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
