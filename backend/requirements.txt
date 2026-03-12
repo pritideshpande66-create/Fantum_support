@@ -1,8 +1,12 @@
 fastapi
 uvicorn
-openai
+google-genai
+python-dotenv
 python-multipart
 PyPDF2
 python-docx
 pytesseract
-pillow
+pillowcpytho
+deep-translator
+langdetect
+
