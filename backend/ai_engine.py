@@ -1,41 +1,58 @@
-from openai import OpenAI
-from knowledge_base import COVELNT_DATA
-from dotenv import load_dotenv
+import requests
 import os
+from dotenv import load_dotenv
+from knowledge_base import COVELNT_DATA
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 def reply(q, context=""):
+
     prompt = f"""
 You are Fantum Support, Covelnt’s AI assistant.
 
 Rules:
-- Answer ONLY based on given company data
+Rules:
+- Answer ONLY based on company data
 - Be friendly and short
-- If unsure, say "Please contact support@covelnt.com"
+- Reply in the SAME language as the user
+- If user writes Hindi in English letters (Hinglish), reply in Hindi
+- If unsure say "Please contact support@covelnt.com"
 
 Company info:
 {COVELNT_DATA}
 
 User uploaded content:
 {context}
+
+User question:
+{q}
 """
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": q}
-            ],
-            temperature=0.4
+
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "deepseek/deepseek-chat",
+                "messages": [
+                    {"role": "user", "content": prompt}
+                ]
+            }
         )
 
-        return response.choices[0].message.content
+        data = response.json()
+        print(response)
+
+        return data["choices"][0]["message"]["content"]
 
     except Exception as e:
-        print("OPENAI ERROR:", e)
-        return str(e)
+        print("AI ERROR:", e)
+        return "AI error occurred"
+
 
