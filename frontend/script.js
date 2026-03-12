@@ -29,7 +29,6 @@ form.addEventListener("submit", async (e) => {
   if (!message) return;
 
   addMessage(message, "user");
-  showTyping();
 
   const data = new FormData();
   data.append("message", message);
@@ -45,7 +44,7 @@ form.addEventListener("submit", async (e) => {
     });
 
     const json = await res.json();
-    removeTyping();
+    
     addMessage(json.reply, "bot");
   } catch (err) {
     addMessage("Server error. Is backend running?", "bot");
@@ -55,23 +54,5 @@ form.addEventListener("submit", async (e) => {
   form.reset();
 });
 
-function showTyping() {
-  const div = document.createElement("div");
-  div.className = "typing";
-  div.id = "typing";
 
-  div.innerHTML = `
-  <span></span>
-  <span></span>
-  <span></span>
-  `;
-
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function removeTyping() {
-  const typing = document.getElementById("typing");
-  if (typing) typing.remove();
-}
 
