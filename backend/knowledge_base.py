@@ -3,8 +3,23 @@ About Covelnt:
 Covelnt is an on-demand services platform connecting users with verified service providers for:
 - Car cleaning
 - Bike washing
-- Photography
+- Plumber
 - Home services
+- Electrician
+- laptop repairing 
+- AC servicing and repair 
+- Automobile mechanics 
+- Gas stove , Induction , Chimney 
+- Beutician 
+- Painters
+- carpainters
+- water tank cleaner 
+- cctv installation
+- TV repairing
+- Washing Machine repair
+- Refrigerator
+- Toilet and Bathroom cleaner 
+
 
 Key Features:
 - Quick and easy service booking
@@ -12,7 +27,7 @@ Key Features:
 - Verified service providers
 - Real-time booking updates
 - Direct user-provider communication
-- Transparent refund policy (within 7 days)
+- Transparent refund policy (within 4 buisness days)
 - No subscription fees, ad-free experience
 
 Contact:
@@ -50,7 +65,6 @@ User Rights:
 Users can request:
 - Data access
 - Data update
-- Account deletion
 
 Contact: support@covelnt.com
 
@@ -60,15 +74,10 @@ TERMS & CONDITIONS
 - Users must provide accurate information
 - Fraud or misuse leads to account suspension
 
-Services:
-- Car Cleaning
-- Bike Washing
-- Photography
-- Home Services
 
 Payments:
 - Handled via Razorpay
-- Refund within 7 business days
+- Refund within 4 business days
 
 Liability:
 Covelnt is a platform connecting users and providers.
