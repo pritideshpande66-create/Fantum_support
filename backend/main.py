@@ -12,7 +12,7 @@ app = FastAPI()
 # ⭐ SUPER CORS (testing mode)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # IMPORTANT
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,12 +25,13 @@ os.makedirs("uploads", exist_ok=True)
 async def chat(message: str = Form(...), file: UploadFile = File(None)):
     try:
         print("\n===== NEW REQUEST =====")
-        print("MESSAGE:", message)
+        print("USER MESSAGE:", message)
 
         context = ""
 
         if file:
             path = f"uploads/{file.filename}"
+
             with open(path, "wb") as f:
                 shutil.copyfileobj(file.file, f)
 
@@ -41,9 +42,10 @@ async def chat(message: str = Form(...), file: UploadFile = File(None)):
             else:
                 context = read_file(path)
 
+        # ⭐ Direct AI call (NO TRANSLATION)
         ai_reply = reply(message, context)
 
-        print("REPLY:", ai_reply)
+        print("AI REPLY:", ai_reply)
 
         return {"reply": ai_reply}
 
@@ -51,4 +53,6 @@ async def chat(message: str = Form(...), file: UploadFile = File(None)):
         print("\n🔥 BACKEND CRASHED 🔥")
         traceback.print_exc()
         return {"reply": "Backend error — check terminal"}
+
+
 
